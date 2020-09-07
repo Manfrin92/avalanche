@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import User from '@modules/users/infra/typeorm/entities/Users';
+import User from '@modules/users/infra/typeorm/entities/User';
 import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/AppError';
 import { injectable, inject } from 'tsyringe';
