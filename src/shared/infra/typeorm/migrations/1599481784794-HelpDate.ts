@@ -27,9 +27,12 @@ export default class HelpDate1599481784794 implements MigrationInterface {
             type: 'uuid',
           },
           {
-            name: 'type_id',
+            name: 'user_volunteer_id',
             type: 'uuid',
-            isNullable: true,
+          },
+          {
+            name: 'type_id',
+            type: 'varchar',
           },
           {
             name: 'restaurant_id',

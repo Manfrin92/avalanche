@@ -1,33 +1,24 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class Restaurants1599481030017 implements MigrationInterface {
+export default class Type1599480435108 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'restaurants',
+        name: 'type',
         columns: [
           {
             name: 'id',
-            type: 'uuid',
+            type: 'varchar',
             isPrimary: true,
-            generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
           },
           {
-            name: 'restaurant_name',
+            name: 'name',
             type: 'varchar',
           },
           {
-            name: 'contact_name',
+            name: 'group_name',
             type: 'varchar',
-          },
-          {
-            name: 'phone_code',
-            type: 'varchar',
-          },
-          {
-            name: 'phone_number',
-            type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'created_at',
@@ -45,6 +36,6 @@ export default class Restaurants1599481030017 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('restaurants');
+    await queryRunner.dropTable('type');
   }
 }

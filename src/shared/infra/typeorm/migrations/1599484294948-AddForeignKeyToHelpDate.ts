@@ -6,11 +6,22 @@ export default class AddForeignKeyToHelpDate1599484294948
     await queryRunner.createForeignKey(
       'help_date',
       new TableForeignKey({
-        name: 'HelpId',
+        name: 'HelpDateUserVolunteer',
+        columnNames: ['user_volunteer_id'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'user',
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+      }),
+    );
+
+    await queryRunner.createForeignKey(
+      'help_date',
+      new TableForeignKey({
+        name: 'HelpDateHelp',
         columnNames: ['help_id'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'helps',
-        onDelete: 'SET NULL',
+        referencedTableName: 'help',
         onUpdate: 'CASCADE',
       }),
     );
@@ -18,10 +29,10 @@ export default class AddForeignKeyToHelpDate1599484294948
     await queryRunner.createForeignKey(
       'help_date',
       new TableForeignKey({
-        name: 'TypeId',
+        name: 'HelpDateType',
         columnNames: ['type_id'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'types',
+        referencedTableName: 'type',
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
       }),
@@ -30,10 +41,10 @@ export default class AddForeignKeyToHelpDate1599484294948
     await queryRunner.createForeignKey(
       'help_date',
       new TableForeignKey({
-        name: 'RestaurantId',
+        name: 'HelpDateRestaurant',
         columnNames: ['restaurant_id'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'restaurants',
+        referencedTableName: 'restaurant',
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
       }),
@@ -41,8 +52,9 @@ export default class AddForeignKeyToHelpDate1599484294948
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('help_date', 'HelpId');
-    await queryRunner.dropForeignKey('help_date', 'TypeId');
-    await queryRunner.dropForeignKey('help_date', 'RestaurantId');
+    await queryRunner.dropForeignKey('user', 'HelpDateUserVolunteer');
+    await queryRunner.dropForeignKey('help', 'HelpDateHelp');
+    await queryRunner.dropForeignKey('type', 'HelpDateType');
+    await queryRunner.dropForeignKey('restaurant', 'HelpDateRestaurant');
   }
 }

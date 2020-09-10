@@ -1,27 +1,27 @@
 import { MigrationInterface, QueryRunner, TableForeignKey } from 'typeorm';
 
-export default class AddForeignKeyToHelps1599483911336
+export default class AddForeignKeyToHelp1599483911336
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createForeignKey(
-      'helps',
+      'help',
       new TableForeignKey({
-        name: 'HelperId',
-        columnNames: ['helper_id'],
+        name: 'UserManagerId',
+        columnNames: ['user_manager_id'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'users',
+        referencedTableName: 'user',
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
       }),
     );
 
     await queryRunner.createForeignKey(
-      'helps',
+      'help',
       new TableForeignKey({
-        name: 'HelpedId',
-        columnNames: ['helped_id'],
+        name: 'NeedyId',
+        columnNames: ['needy_id'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'users',
+        referencedTableName: 'needy',
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
       }),
@@ -29,7 +29,7 @@ export default class AddForeignKeyToHelps1599483911336
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('helps', 'HelpedId');
-    await queryRunner.dropForeignKey('helps', 'HelperId');
+    await queryRunner.dropForeignKey('user', 'UserManagerId');
+    await queryRunner.dropForeignKey('needy', 'NeedyId');
   }
 }
