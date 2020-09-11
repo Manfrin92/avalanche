@@ -6,7 +6,7 @@ import {
   UpdateDateColumn,
   JoinColumn,
   ManyToMany,
-  OneToOne,
+  OneToOne,, ManyToOne
 } from 'typeorm';
 
 import User from '@modules/user/infra/typeorm/entities/User';
@@ -27,25 +27,25 @@ class HelpDate {
 
   @OneToOne(() => Help)
   @JoinColumn({ name: 'help_id' })
-  helpeId: Help;
+  helpe: Help;
 
   @OneToOne(() => User)
   @JoinColumn({ name: 'user_volunteer_id' })
-  userVolunteerId: User;
+  userVolunteer: User;
 
-  @OneToOne(() => Type)
+  @ManyToOne(() => Type)
   @JoinColumn({ name: 'type_id' })
-  typeId: Type;
+  type: Type;
 
-  @ManyToMany(() => Restaurant)
+  @ManyToOne(() => Restaurant)
   @JoinColumn({ name: 'restaurant_id' })
-  restaurantId: Restaurant;
+  restaurant: Restaurant;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 }
 
 export default HelpDate;

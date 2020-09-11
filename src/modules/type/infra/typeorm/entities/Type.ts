@@ -14,14 +14,14 @@ class Type {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ name: 'group_name' })
   groupName: string;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 }
 
 export default Type;

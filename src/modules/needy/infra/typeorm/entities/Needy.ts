@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToOne,
-  JoinColumn,
+  JoinColumn,, ManyToOne
 } from 'typeorm';
 
 import Type from '@modules/type/infra/typeorm/entities/Type';
@@ -24,24 +24,24 @@ class Needy {
   @Column()
   cpf: string;
 
-  @Column()
+  @Column({name: 'show_contact'})
   showContact: boolean;
 
-  @OneToOne(() => Type)
+  @ManyToOne(() => Type)
   @JoinColumn({ name: 'type_id' })
-  typeId: Type;
+  type: Type;
 
   @Column()
   password: string;
 
-  @Column()
-  phone_number: string;
+  @Column({name: 'phone_number'})
+  phoneNumber: string;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 }
 
 export default Needy;

@@ -23,14 +23,14 @@ class User {
   @Column()
   password: string;
 
-  @Column()
-  phone_number: string;
+  @Column({ name: 'phone_number' })
+  phoneNumber: string;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 }
 
 export default User;

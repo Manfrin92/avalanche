@@ -26,17 +26,17 @@ class Help {
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'user_manager_id' })
-  userManagerId: User;
+  userManager: User;
 
   @ManyToOne(() => Needy)
   @JoinColumn({ name: 'needy_id' })
-  needyId: Needy;
+  needy: Needy;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 }
 
 export default Help;

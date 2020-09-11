@@ -11,23 +11,23 @@ class Restaurant {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  restaurant_name: string;
+  @Column({ name: 'restaurant_name' })
+  restaurantName: string;
 
-  @Column()
-  contact_name: string;
+  @Column({ name: 'contact_name' })
+  contactName: string;
 
-  @Column()
-  phone_number: string;
+  @Column({ name: 'phone_number' })
+  phoneNumber: string;
 
   @Column()
   email: string;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 }
 
 export default Restaurant;
