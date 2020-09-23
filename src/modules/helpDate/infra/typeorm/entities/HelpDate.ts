@@ -5,8 +5,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   JoinColumn,
-  ManyToMany,
-  OneToOne,, ManyToOne
+  OneToOne,
+  ManyToOne,
 } from 'typeorm';
 
 import User from '@modules/user/infra/typeorm/entities/User';

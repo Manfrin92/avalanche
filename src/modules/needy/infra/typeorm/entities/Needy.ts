@@ -4,8 +4,8 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToOne,
-  JoinColumn,, ManyToOne
+  JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 
 import Type from '@modules/type/infra/typeorm/entities/Type';
@@ -24,7 +24,7 @@ class Needy {
   @Column()
   cpf: string;
 
-  @Column({name: 'show_contact'})
+  @Column({ name: 'show_contact' })
   showContact: boolean;
 
   @ManyToOne(() => Type)
@@ -34,7 +34,7 @@ class Needy {
   @Column()
   password: string;
 
-  @Column({name: 'phone_number'})
+  @Column({ name: 'phone_number' })
   phoneNumber: string;
 
   @CreateDateColumn({ name: 'created_at' })
