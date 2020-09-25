@@ -1,13 +1,9 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
+import UserController from '../controllers/UserController';
 
 const userRouter = Router();
+const userController = new UserController();
 
-userRouter.post('/', (request: Request, response: Response): void => {
-  const { name, email, cpf, password, phoneNumber } = request.body;
-
-  console.log({ name, email, cpf, password, phoneNumber });
-
-  response.send('OK');
-});
+userRouter.post('/add', userController.create);
 
 export default userRouter;
