@@ -3,15 +3,18 @@ import { Request, Response } from 'express';
 import UserService from '../services/UserService';
 
 export default class UserController {
-  public async create(request: Request, response: Response): Promise<Response> {
+  public async create(
+    request: Request,
+    response: Response,
+  ): Promise<Response | undefined> {
     try {
       const userService = new UserService();
       const data = request.body;
-      const deliverer = await userService.create(data);
-      return response.json(deliverer);
+      const user = await userService.create(data);
+      return response.json(user);
     } catch (e) {
-      // throw new AppError(e);
       console.log('Erro no cadastro, ', e);
     }
+    return undefined;
   }
 }

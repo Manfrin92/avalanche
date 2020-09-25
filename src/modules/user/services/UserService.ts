@@ -1,5 +1,7 @@
+/* eslint-disable no-param-reassign */
 import { getCustomRepository, getRepository, Repository } from 'typeorm';
 import ICreateUserDTO from '@modules/user/dtos/ICreateUserDTO';
+import { hash } from 'bcryptjs';
 
 import User from '../infra/typeorm/entities/User';
 
@@ -10,9 +12,22 @@ class UserService {
     this.ormRepository = getRepository(User);
   }
 
-  public async create(userData: ICreateUserDTO): Promise<User> {
+  public async create(userData: ICreateUserDTO): Promise<User | undefined> {
+    const foundEmailCpf = await this.getByEmailCpf(
+      userData.email,
+      userData.cpf,
+    );
+
+    if (foundEmailCpf) {
+      return;
+    }
+
+    const hashedPassword = await hash(userData.password.toLowerCase(), 8);
+    userData.password = hashedPassword;
+
     const user = this.ormRepository.create(userData);
     await this.ormRepository.save(user);
+    // eslint-disable-next-line consistent-return
     return user;
   }
 
@@ -31,17 +46,15 @@ class UserService {
 
     if (emailFound) {
       // throw new AppError('E-mail já está em uso.');
-      console.log('E-mail já está em uso.');
-      return false;
+      return true;
     }
 
     if (cpfFound) {
       // throw new AppError('CPF já está em uso.');
-      console.log('CPF já está em uso.');
-      return false;
+      return true;
     }
 
-    return true;
+    return false;
   }
 
   public async findById(id: string): Promise<User | undefined> {
