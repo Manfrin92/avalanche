@@ -3,6 +3,7 @@ import { getCustomRepository, getRepository, Repository } from 'typeorm';
 import ICreateUserDTO from '@modules/user/dtos/ICreateUserDTO';
 import { hash } from 'bcryptjs';
 
+import { response } from 'express';
 import User from '../infra/typeorm/entities/User';
 
 class UserService {
@@ -13,15 +14,6 @@ class UserService {
   }
 
   public async create(userData: ICreateUserDTO): Promise<User | undefined> {
-    const foundEmailCpf = await this.getByEmailCpf(
-      userData.email,
-      userData.cpf,
-    );
-
-    if (foundEmailCpf) {
-      return;
-    }
-
     const hashedPassword = await hash(userData.password.toLowerCase(), 8);
     userData.password = hashedPassword;
 
