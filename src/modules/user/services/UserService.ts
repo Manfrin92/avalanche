@@ -36,13 +36,7 @@ class UserService {
       where: { cpf },
     });
 
-    if (emailFound) {
-      // throw new AppError('E-mail já está em uso.');
-      return true;
-    }
-
-    if (cpfFound) {
-      // throw new AppError('CPF já está em uso.');
+    if (emailFound || cpfFound) {
       return true;
     }
 

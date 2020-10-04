@@ -38,4 +38,32 @@ export default class UserController {
       return response.status(400).send('Erro no cadastro.');
     }
   }
+
+  public async checkCpfEmail(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    try {
+      if (!request.body.email || !request.body.cpf) {
+        return response.status(400).send('É necessário informar CPF e Email');
+      }
+
+      const userService = new UserService();
+
+      const alreadyCreatedUser = await userService.getByEmailCpf(
+        request.body.email,
+        request.body.cpf,
+      );
+
+      if (alreadyCreatedUser) {
+        console.log('Email ou Cpf em uso.');
+        return response.json(true);
+      }
+
+      return response.json(false);
+    } catch (e) {
+      console.log(e);
+      throw new Error(e);
+    }
+  }
 }
