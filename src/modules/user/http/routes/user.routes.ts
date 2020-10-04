@@ -6,5 +6,6 @@ const userController = new UserController();
 
 userRouter.post('/add', userController.create);
 userRouter.post('/checkCpfEmail', userController.checkCpfEmail);
+userRouter.post('/logIn', userController.logIn);
 
 export default userRouter;

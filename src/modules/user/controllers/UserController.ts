@@ -1,6 +1,11 @@
 import { Request, Response } from 'express';
 // import AppError from '@shared/errors/AppError';
+import { compare, hash } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
+import { getCustomRepository, getRepository, Repository } from 'typeorm';
 import UserService from '../services/UserService';
+import authConfig from '../../../config/auth';
+import User from '../infra/typeorm/entities/User';
 
 export default class UserController {
   public async create(
@@ -61,6 +66,50 @@ export default class UserController {
       }
 
       return response.json(false);
+    } catch (e) {
+      console.log(e);
+      throw new Error(e);
+    }
+  }
+
+  public async logIn(request: Request, response: Response): Promise<Response> {
+    try {
+      const { email, password } = request.body;
+
+      if (!email || !password) {
+        return response
+          .status(400)
+          .send('É necessário informar Email e Senha.');
+      }
+
+      const userRepository = getRepository(User);
+      const user = await userRepository.findOne({
+        where: { email },
+      });
+
+      if (!user) {
+        return response.status(400).send('Usuário não encontrado.');
+      }
+
+      const passwordMatched = await compare(
+        password.toLowerCase(),
+        user.password,
+      );
+
+      if (!passwordMatched) {
+        return response.status(400).send('Senha não confere.');
+      }
+
+      const { secret, expiresIn } = authConfig.jwt;
+
+      const token = sign({}, secret, {
+        subject: user.id,
+        expiresIn,
+      });
+
+      delete user.password;
+
+      return response.json({ user, token });
     } catch (e) {
       console.log(e);
       throw new Error(e);

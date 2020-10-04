@@ -1,10 +1,22 @@
 /* eslint-disable no-param-reassign */
 import { getCustomRepository, getRepository, Repository } from 'typeorm';
 import ICreateUserDTO from '@modules/user/dtos/ICreateUserDTO';
-import { hash } from 'bcryptjs';
-
+import { compare, hash } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
 import { response } from 'express';
+import authConfig from '../../../config/auth';
+
 import User from '../infra/typeorm/entities/User';
+
+interface IRequest {
+  email: string;
+  password: string;
+}
+
+interface IResponseUser {
+  user: User;
+  token: string;
+}
 
 class UserService {
   private ormRepository: Repository<User>;
