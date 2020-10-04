@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 
 @Entity('address')
-class Adress {
+class Address {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -15,14 +15,13 @@ class Adress {
     type: 'varchar',
     length: 11,
     name: 'address_zip_code',
-    nullable: true,
   })
   addressZipCode: string;
 
   @Column({ type: 'varchar', length: 70, name: 'address_street' })
   addressStreet: string;
 
-  @Column({ type: 'int4', name: 'address_number' })
+  @Column({ type: 'int4', name: 'address_number', nullable: true })
   addressNumber: number;
 
   @Column({
@@ -46,6 +45,7 @@ class Adress {
     type: 'varchar',
     length: 60,
     name: 'address_country',
+    nullable: true,
   })
   addressCountry: string;
 
@@ -56,4 +56,4 @@ class Adress {
   updatedAt: Date;
 }
 
-export default Adress;
+export default Address;

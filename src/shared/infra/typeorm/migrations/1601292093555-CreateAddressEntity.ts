@@ -17,7 +17,6 @@ export default class CreateAddressEntity1601292093555
           {
             name: 'address_zip_code',
             type: 'varchar',
-            isNullable: true,
             length: '11',
           },
           {
@@ -28,11 +27,13 @@ export default class CreateAddressEntity1601292093555
           {
             name: 'address_number',
             type: 'int4',
+            isNullable: true,
           },
           {
             name: 'address_complement',
             type: 'varchar',
             length: '100',
+            isNullable: true,
           },
           {
             name: 'address_area',
@@ -53,6 +54,7 @@ export default class CreateAddressEntity1601292093555
             name: 'address_country',
             type: 'varchar',
             length: '60',
+            isNullable: true,
           },
           {
             name: 'created_at',

@@ -31,6 +31,9 @@ class User {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @Column({ name: 'address_id' })
+  addressId: string;
 }
 
 export default User;
