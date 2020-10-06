@@ -52,9 +52,9 @@ export default class AddForeignKeyToHelpDate1599484294948
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('user', 'HelpDateUserVolunteer');
-    await queryRunner.dropForeignKey('help', 'HelpDateHelp');
-    await queryRunner.dropForeignKey('type', 'HelpDateType');
-    await queryRunner.dropForeignKey('restaurant', 'HelpDateRestaurant');
+    await queryRunner.dropForeignKey('help_date', 'HelpDateRestaurant');
+    await queryRunner.dropForeignKey('help_date', 'HelpDateType');
+    await queryRunner.dropForeignKey('help_date', 'HelpDateHelp');
+    await queryRunner.dropForeignKey('help_date', 'HelpDateUserVolunteer');
   }
 }

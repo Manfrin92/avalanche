@@ -23,11 +23,14 @@ class HelpDate {
   description: string;
 
   @Column()
+  observation: string;
+
+  @Column()
   date: Date;
 
   @OneToOne(() => Help)
   @JoinColumn({ name: 'help_id' })
-  helpe: Help;
+  help: Help;
 
   @OneToOne(() => User)
   @JoinColumn({ name: 'user_volunteer_id' })

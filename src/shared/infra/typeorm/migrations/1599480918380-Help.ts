@@ -22,12 +22,22 @@ export default class Help1599480918380 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'observation',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
             name: 'user_manager_id',
             type: 'uuid',
             isNullable: true,
           },
           {
             name: 'needy_id',
+            type: 'uuid',
+            isNullable: true,
+          },
+          {
+            name: 'address_id',
             type: 'uuid',
             isNullable: true,
           },

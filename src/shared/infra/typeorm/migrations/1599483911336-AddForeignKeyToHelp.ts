@@ -29,7 +29,7 @@ export default class AddForeignKeyToHelp1599483911336
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('user', 'UserManagerId');
-    await queryRunner.dropForeignKey('needy', 'NeedyId');
+    await queryRunner.dropForeignKey('help', 'NeedyId');
+    await queryRunner.dropForeignKey('help', 'UserManagerId');
   }
 }

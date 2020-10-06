@@ -10,6 +10,7 @@ import {
 
 import User from '@modules/user/infra/typeorm/entities/User';
 import Needy from '@modules/needy/infra/typeorm/entities/Needy';
+import Address from '@modules/address/infra/typeorm/entities/Address';
 
 @Entity('help')
 class Help {
@@ -22,6 +23,9 @@ class Help {
   @Column()
   description: string;
 
+  @Column()
+  observation: string;
+
   @ManyToOne(() => User)
   @JoinColumn({ name: 'user_manager_id' })
   userManager: User;
@@ -29,6 +33,10 @@ class Help {
   @ManyToOne(() => Needy)
   @JoinColumn({ name: 'needy_id' })
   needy: Needy;
+
+  @ManyToOne(() => Address)
+  @JoinColumn({ name: 'address_id' })
+  address: Address;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

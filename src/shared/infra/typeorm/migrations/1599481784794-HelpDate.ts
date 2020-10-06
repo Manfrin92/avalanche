@@ -19,6 +19,11 @@ export default class HelpDate1599481784794 implements MigrationInterface {
             isNullable: true,
           },
           {
+            name: 'observation',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
             name: 'date',
             type: 'timestamp with time zone',
           },

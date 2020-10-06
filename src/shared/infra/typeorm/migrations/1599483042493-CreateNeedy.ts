@@ -24,26 +24,14 @@ export default class CreateNeedy1599483042493 implements MigrationInterface {
             isNullable: true,
           },
           {
-            name: 'cpf',
-            type: 'varchar',
-            isNullable: true,
-          },
-          {
             name: 'show_contact',
             type: 'boolean',
             default: true,
           },
           {
-            name: 'type_id',
-            type: 'varchar',
-          },
-          {
-            name: 'password',
-            type: 'varchar',
-          },
-          {
             name: 'phone_number',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'created_at',

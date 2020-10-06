@@ -21,18 +21,8 @@ class Needy {
   @Column()
   email: string;
 
-  @Column()
-  cpf: string;
-
   @Column({ name: 'show_contact' })
   showContact: boolean;
-
-  @ManyToOne(() => Type)
-  @JoinColumn({ name: 'type_id' })
-  type: Type;
-
-  @Column()
-  password: string;
 
   @Column({ name: 'phone_number' })
   phoneNumber: string;
