@@ -21,7 +21,8 @@ export default class UserController {
         !data.cpf ||
         !data.name ||
         !data.password ||
-        !data.phoneNumber
+        !data.phoneNumber ||
+        !data.addressId
       ) {
         return response.status(400).send('Faltam dados para o cadastro');
       }

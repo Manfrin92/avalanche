@@ -15,7 +15,6 @@ class AddressService {
   public async create(
     addressData: ICreateAddressDTO,
   ): Promise<Address | undefined> {
-    console.log('ADDRESSDATA -----: ', addressData);
     const address = this.ormRepository.create(addressData);
     await this.ormRepository.save(address);
     // eslint-disable-next-line consistent-return
