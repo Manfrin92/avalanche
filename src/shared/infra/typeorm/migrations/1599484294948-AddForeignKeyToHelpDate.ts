@@ -37,22 +37,9 @@ export default class AddForeignKeyToHelpDate1599484294948
         onUpdate: 'CASCADE',
       }),
     );
-
-    await queryRunner.createForeignKey(
-      'help_date',
-      new TableForeignKey({
-        name: 'HelpDateRestaurant',
-        columnNames: ['restaurant_id'],
-        referencedColumnNames: ['id'],
-        referencedTableName: 'restaurant',
-        onDelete: 'SET NULL',
-        onUpdate: 'CASCADE',
-      }),
-    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('help_date', 'HelpDateRestaurant');
     await queryRunner.dropForeignKey('help_date', 'HelpDateType');
     await queryRunner.dropForeignKey('help_date', 'HelpDateHelp');
     await queryRunner.dropForeignKey('help_date', 'HelpDateUserVolunteer');

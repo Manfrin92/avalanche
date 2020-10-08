@@ -6,11 +6,13 @@ import {
   UpdateDateColumn,
   JoinColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 
 import User from '@modules/user/infra/typeorm/entities/User';
 import Needy from '@modules/needy/infra/typeorm/entities/Needy';
 import Address from '@modules/address/infra/typeorm/entities/Address';
+import HelpDate from '@modules/helpDate/infra/typeorm/entities/HelpDate';
 
 @Entity('help')
 class Help {
@@ -29,6 +31,9 @@ class Help {
   @ManyToOne(() => User)
   @JoinColumn({ name: 'user_manager_id' })
   userManager: User;
+
+  @OneToMany(() => HelpDate, helpDates => helpDates.help)
+  helpDates: HelpDate[];
 
   @ManyToOne(() => Needy)
   @JoinColumn({ name: 'needy_id' })

@@ -21,6 +21,16 @@ class HelpService {
   public async save(help: Help): Promise<Help> {
     return this.ormRepository.save(help);
   }
+
+  public async findAllByUserManagerId(
+    userManagerId: string,
+  ): Promise<Help[] | undefined> {
+    const helpRepository = getRepository(Help);
+    const help = await helpRepository.find({
+      where: { userManager: userManagerId },
+    });
+    return help;
+  }
 }
 
 export default HelpService;

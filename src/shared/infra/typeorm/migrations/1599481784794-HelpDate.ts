@@ -14,16 +14,6 @@ export default class HelpDate1599481784794 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'description',
-            type: 'varchar',
-            isNullable: true,
-          },
-          {
-            name: 'observation',
-            type: 'varchar',
-            isNullable: true,
-          },
-          {
             name: 'date',
             type: 'timestamp with time zone',
           },
@@ -38,11 +28,6 @@ export default class HelpDate1599481784794 implements MigrationInterface {
           {
             name: 'type_id',
             type: 'varchar',
-          },
-          {
-            name: 'restaurant_id',
-            type: 'uuid',
-            isNullable: true,
           },
           {
             name: 'created_at',
