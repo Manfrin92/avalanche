@@ -46,4 +46,27 @@ export default class HelpController {
       return response.send('Nenhuma ajuda encontrada');
     }
   }
+
+  public async delete(request: Request, response: Response): Promise<Response> {
+    try {
+      const helpService = new HelpService();
+      const { id } = request.body;
+
+      await helpService.delete(id);
+      return response.status(204).send();
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
+  public async update(request: Request, response: Response): Promise<Response> {
+    try {
+      const helpService = new HelpService();
+      const data = request.body;
+      const help = await helpService.update(data);
+      return response.json(help);
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
 }

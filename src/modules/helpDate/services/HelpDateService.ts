@@ -56,13 +56,11 @@ class UserService {
       },
     });
 
-    console.log('achou no banco? ', helpDate);
-
     if (!helpDate) {
       throw new Error('helpDate not found.');
     }
 
-    await helpDateRepository.save(helpDate);
+    await helpDateRepository.save(helpDateData);
     return helpDate;
   }
 

@@ -31,6 +31,37 @@ class HelpService {
     });
     return help;
   }
+
+  public async delete(id: string): Promise<void> {
+    const helpRepository = getRepository(Help);
+    const help = await helpRepository.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!help) {
+      throw new Error('Help ID does not exist');
+    }
+
+    await helpRepository.delete({ id });
+  }
+
+  public async update(helpData: any): Promise<Help> {
+    const helpRepository = getRepository(Help);
+    const help = await helpRepository.findOne({
+      where: {
+        id: helpData.id,
+      },
+    });
+
+    if (!help) {
+      throw new Error('helpDate not found.');
+    }
+
+    await helpRepository.save(helpData);
+    return help;
+  }
 }
 
 export default HelpService;
