@@ -48,6 +48,16 @@ class UserService {
     return helpDates;
   }
 
+  public async helpDatesById(id: string): Promise<HelpDate[]> {
+    const helpDateRepository = getRepository(HelpDate);
+    const helpDates = await helpDateRepository.find({
+      where: {
+        id,
+      },
+    });
+    return helpDates;
+  }
+
   public async update(helpDateData: any): Promise<HelpDate> {
     const helpDateRepository = getRepository(HelpDate);
     const helpDate = await helpDateRepository.findOne({

@@ -9,6 +9,7 @@ helpRouter.post(
   '/helpDatesByUserVolunteerId',
   helpController.helpDatesByUserVolunteerId,
 );
+helpRouter.post('/id', helpController.helpDatesById);
 helpRouter.put('/', helpController.update);
 helpRouter.delete('/', helpController.delete);
 

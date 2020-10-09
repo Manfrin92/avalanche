@@ -49,6 +49,33 @@ export default class HelpDateController {
     }
   }
 
+  public async helpDatesById(
+    request: Request,
+    response: Response,
+  ): Promise<Response | undefined> {
+    try {
+      const helpDateService = new HelpDateService();
+      const { id } = request.body;
+
+      if (!id) {
+        return response.status(400).send('Envie o id do usuário voluntário');
+      }
+
+      const helpDates = await helpDateService.helpDatesById(id);
+
+      if (helpDates && helpDates.length < 1) {
+        return response
+          .status(200)
+          .json({ message: 'helpDate não encontrado' });
+      }
+
+      return response.json(helpDates);
+    } catch (e) {
+      console.log('Erro no cadastro do helpDate, ', e);
+      return response.status(400).send('Erro no cadastro.');
+    }
+  }
+
   public async update(request: Request, response: Response): Promise<Response> {
     try {
       const helpDateService = new HelpDateService();

@@ -32,6 +32,14 @@ class HelpService {
     return help;
   }
 
+  public async findAllById(id: string): Promise<Help[] | undefined> {
+    const helpRepository = getRepository(Help);
+    const help = await helpRepository.find({
+      where: { id },
+    });
+    return help;
+  }
+
   public async delete(id: string): Promise<void> {
     const helpRepository = getRepository(Help);
     const help = await helpRepository.findOne({

@@ -7,6 +7,7 @@ const helpController = new HelpController();
 helpRouter.post('/add', helpController.create);
 helpRouter.put('/', helpController.update);
 helpRouter.delete('/', helpController.delete);
-helpRouter.get('/findHelps', helpController.findAllByUserManagerId);
+helpRouter.post('/findHelps', helpController.findAllByUserManagerId);
+helpRouter.post('/findHelp', helpController.findAllById);
 
 export default helpRouter;

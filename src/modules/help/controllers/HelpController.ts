@@ -47,6 +47,27 @@ export default class HelpController {
     }
   }
 
+  public async findAllById(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    try {
+      const helpService = new HelpService();
+      const { id } = request.body;
+      if (!id) {
+        response.status(400).json({ message: 'Digite o id da ajuda' });
+      }
+      const help = await helpService.findAllById(id);
+      if (help && help.length < 1) {
+        response.status(200).json({ message: 'Ajuda não encontrada' });
+      }
+      return response.json(help);
+    } catch (e) {
+      console.log('err', e);
+      return response.send('Nenhuma ajuda encontrada');
+    }
+  }
+
   public async delete(request: Request, response: Response): Promise<Response> {
     try {
       const helpService = new HelpService();
