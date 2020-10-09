@@ -10,7 +10,7 @@ export default class AddForeignKeyAddressIdToUser1601810451279
         columnNames: ['address_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'address',
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       }),
     );

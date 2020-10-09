@@ -10,6 +10,7 @@ helpRouter.post(
   helpController.helpDatesByUserVolunteerId,
 );
 helpRouter.post('/id', helpController.helpDatesById);
+helpRouter.post('/helpId', helpController.helpDatesByHelpId);
 helpRouter.put('/', helpController.update);
 helpRouter.delete('/', helpController.delete);
 

@@ -33,7 +33,7 @@ class User {
   updatedAt: Date;
 
   @Column({ name: 'address_id' })
-  addressId: string;
+  address: string;
 }
 
 export default User;

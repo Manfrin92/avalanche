@@ -58,6 +58,16 @@ class UserService {
     return helpDates;
   }
 
+  public async helpDatesByHelpId(id: string): Promise<HelpDate[]> {
+    const helpDateRepository = getRepository(HelpDate);
+    const helpDates = await helpDateRepository.find({
+      where: {
+        id,
+      },
+    });
+    return helpDates;
+  }
+
   public async update(helpDateData: any): Promise<HelpDate> {
     const helpDateRepository = getRepository(HelpDate);
     const helpDate = await helpDateRepository.findOne({
@@ -70,8 +80,7 @@ class UserService {
       throw new Error('helpDate not found.');
     }
 
-    await helpDateRepository.save(helpDateData);
-    return helpDate;
+    return helpDateRepository.save(helpDateData);
   }
 
   public async delete(id: string): Promise<void> {

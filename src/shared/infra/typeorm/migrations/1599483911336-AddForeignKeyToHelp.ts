@@ -10,7 +10,7 @@ export default class AddForeignKeyToHelp1599483911336
         columnNames: ['user_manager_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'user',
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       }),
     );
@@ -22,7 +22,7 @@ export default class AddForeignKeyToHelp1599483911336
         columnNames: ['needy_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'needy',
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       }),
     );

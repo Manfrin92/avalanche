@@ -10,7 +10,7 @@ export default class AddForeignKeyToHelpDate1599484294948
         columnNames: ['user_volunteer_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'user',
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       }),
     );
@@ -22,6 +22,7 @@ export default class AddForeignKeyToHelpDate1599484294948
         columnNames: ['help_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'help',
+        onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       }),
     );
@@ -33,7 +34,7 @@ export default class AddForeignKeyToHelpDate1599484294948
         columnNames: ['type_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'type',
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       }),
     );

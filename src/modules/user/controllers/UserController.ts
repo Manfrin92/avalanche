@@ -22,7 +22,7 @@ export default class UserController {
         !data.name ||
         !data.password ||
         !data.phoneNumber ||
-        !data.addressId
+        !data.address
       ) {
         return response.status(400).send('Faltam dados para o cadastro');
       }
