@@ -24,7 +24,9 @@ export default class UserController {
         !data.phoneNumber ||
         !data.address
       ) {
-        return response.status(400).send('Faltam dados para o cadastro');
+        return response
+          .status(400)
+          .send('Faltam dados para o cadastro do usuário');
       }
 
       const foundEmailCpf = await userService.getByEmailCpf(
@@ -42,6 +44,21 @@ export default class UserController {
     } catch (e) {
       console.log('Erro no cadastro, ', e);
       return response.status(400).send('Erro no cadastro.');
+    }
+  }
+
+  public async update(request: Request, response: Response): Promise<Response> {
+    try {
+      const userService = new UserService();
+      const data = request.body;
+      console.log('dados entrando: ', data);
+      if (!data.id) {
+        return response.status(400).json({ message: 'Digite o ID do usuário' });
+      }
+      const user = await userService.update(data);
+      return response.json(user);
+    } catch (e) {
+      console.log(e);
     }
   }
 

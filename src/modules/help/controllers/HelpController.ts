@@ -76,7 +76,7 @@ export default class HelpController {
       await helpService.delete(id);
       return response.status(204).send();
     } catch (e) {
-      throw new Error(e);
+      console.log(e);
     }
   }
 
@@ -87,7 +87,7 @@ export default class HelpController {
       const help = await helpService.update(data);
       return response.json(help);
     } catch (e) {
-      throw new Error(e);
+      console.log(e);
     }
   }
 }

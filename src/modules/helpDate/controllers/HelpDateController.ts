@@ -14,6 +14,7 @@ export default class HelpDateController {
       const data = request.body;
 
       if (!data.date || !data.help || !data.userVolunteer || !data.type) {
+        console.log(data);
         return response
           .status(400)
           .send('Faltam dados para o cadastro do dia de ajuda');

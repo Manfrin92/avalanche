@@ -35,6 +35,22 @@ class UserService {
     return user;
   }
 
+  public async update(userData: any): Promise<User | undefined> {
+    const userRepository = getRepository(User);
+    const user = await userRepository.findOne({
+      where: {
+        id: userData.id,
+      },
+    });
+
+    if (!user) {
+      return console.log('User not found.');
+    }
+
+    await userRepository.save(userData);
+    return user;
+  }
+
   public async save(user: User): Promise<User> {
     return this.ormRepository.save(user);
   }

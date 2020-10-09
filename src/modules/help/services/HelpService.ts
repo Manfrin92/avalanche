@@ -49,7 +49,7 @@ class HelpService {
     });
 
     if (!help) {
-      throw new Error('Help ID does not exist');
+      console.log('Help ID does not exist');
     }
 
     await helpRepository.delete({ id });
@@ -64,7 +64,7 @@ class HelpService {
     });
 
     if (!help) {
-      throw new Error('helpDate not found.');
+      console.log('helpDate not found.');
     }
 
     await helpRepository.save(helpData);
