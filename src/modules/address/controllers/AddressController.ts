@@ -8,7 +8,6 @@ export default class AddressController {
     response: Response,
   ): Promise<Response | undefined> {
     try {
-      const addressService = new AddressService();
       const data = request.body;
 
       if (
@@ -24,8 +23,32 @@ export default class AddressController {
           .json(false);
       }
 
+      const addressService = new AddressService();
       const address = await addressService.create(data);
       return response.json(address?.id);
+    } catch (e) {
+      console.log('Erro no cadastro, ', e);
+      return response.status(400).send('Erro no cadastro de endereço.');
+    }
+  }
+
+  public async getAddressById(
+    request: Request,
+    response: Response,
+  ): Promise<Response | undefined> {
+    try {
+      const data = request.body;
+
+      if (!data.id) {
+        return response
+          .status(400)
+          .send('Faltam dados para buscar o endereço.')
+          .json(false);
+      }
+
+      const addressService = new AddressService();
+      const address = await addressService.getAddressById(data.id);
+      return response.json(address);
     } catch (e) {
       console.log('Erro no cadastro, ', e);
       return response.status(400).send('Erro no cadastro de endereço.');

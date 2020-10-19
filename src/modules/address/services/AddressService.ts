@@ -12,17 +12,23 @@ class AddressService {
     this.ormRepository = getRepository(Address);
   }
 
-  public async create(
-    addressData: ICreateAddressDTO,
-  ): Promise<Address | undefined> {
+  public async create(addressData: ICreateAddressDTO): Promise<Address> {
     const address = this.ormRepository.create(addressData);
     await this.ormRepository.save(address);
-    // eslint-disable-next-line consistent-return
     return address;
   }
 
   public async save(address: Address): Promise<Address> {
     return this.ormRepository.save(address);
+  }
+
+  public async getAddressById(id: string): Promise<Address | null> {
+    const address = await this.ormRepository.findOne(id);
+    if (address) {
+      return address;
+    }
+    console.log('Address not found');
+    return null;
   }
 }
 
