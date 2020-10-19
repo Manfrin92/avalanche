@@ -51,7 +51,6 @@ export default class UserController {
     try {
       const userService = new UserService();
       const data = request.body;
-      console.log('dados entrando: ', data);
       if (!data.id) {
         return response.status(400).json({ message: 'Digite o ID do usuário' });
       }
