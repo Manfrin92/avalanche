@@ -54,9 +54,7 @@ export default class UserController {
     try {
       const userService = new UserService();
       const data = request.body;
-      console.log('dados chegando na req: ', data);
       if (!data.id) {
-        console.log('che');
         return response.status(400).json({ message: 'Digite o ID do usuário' });
       }
       const user = await userService.update(data);

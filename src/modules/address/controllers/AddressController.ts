@@ -62,6 +62,8 @@ export default class AddressController {
     try {
       const data = request.body;
 
+      console.log('dados chegando: ', data);
+
       if (!data.id) {
         return response
           .status(400)
