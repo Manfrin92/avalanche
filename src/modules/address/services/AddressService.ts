@@ -30,6 +30,14 @@ class AddressService {
     console.log('Address not found');
     return null;
   }
+
+  public async deleteById(id: string): Promise<void> {
+    const address = await this.ormRepository.findOne(id);
+    if (!address) {
+      console.log('Address not found');
+    }
+    await this.ormRepository.delete(id);
+  }
 }
 
 export default AddressService;

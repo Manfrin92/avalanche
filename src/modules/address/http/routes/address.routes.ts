@@ -6,5 +6,6 @@ const addressController = new AddressController();
 
 addressRouter.post('/add', addressController.create);
 addressRouter.post('/getAddressById', addressController.getAddressById);
+addressRouter.delete('/', addressController.deleteById);
 
 export default addressRouter;
