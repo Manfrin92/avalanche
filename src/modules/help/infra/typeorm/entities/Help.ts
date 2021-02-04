@@ -25,7 +25,7 @@ class Help {
   @Column()
   description: string;
 
-  @Column()
+  @Column({ nullable: true })
   observation: string;
 
   @ManyToOne(() => User)

@@ -18,13 +18,13 @@ class Needy {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   email: string;
 
-  @Column({ name: 'show_contact' })
+  @Column({ name: 'show_contact', default: true })
   showContact: boolean;
 
-  @Column({ name: 'phone_number' })
+  @Column({ name: 'phone_number', nullable: true })
   phoneNumber: string;
 
   @CreateDateColumn({ name: 'created_at' })

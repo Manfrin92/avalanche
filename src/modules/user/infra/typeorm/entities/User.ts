@@ -14,10 +14,10 @@ class User {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   cpf: string;
 
   @Column()
@@ -32,7 +32,7 @@ class User {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @Column({ name: 'address_id' })
+  @Column({ name: 'address_id', nullable: true })
   address: string;
 }
 

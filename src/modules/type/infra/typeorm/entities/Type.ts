@@ -1,14 +1,12 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('type')
 class Type {
-  @PrimaryGeneratedColumn('uuid')
+  @Column({
+    type: 'varchar',
+    length: 40,
+    primary: true,
+  })
   id: string;
 
   @Column()
