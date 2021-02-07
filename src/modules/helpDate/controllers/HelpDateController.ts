@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
 // import AppError from '@shared/errors/AppError';
-import { getCustomRepository, getRepository, Repository } from 'typeorm';
 import HelpDateService from '../services/HelpDateService';
-import HelpDate from '../infra/typeorm/entities/HelpDate';
 
 export default class HelpDateController {
   public async create(
@@ -13,8 +11,7 @@ export default class HelpDateController {
       const helpDateService = new HelpDateService();
       const data = request.body;
 
-      if (!data.date || !data.help || !data.userVolunteer || !data.type) {
-        console.log(data);
+      if (!data.date || !data.help || !data.type) {
         return response
           .status(400)
           .send('Faltam dados para o cadastro do dia de ajuda');
@@ -23,7 +20,7 @@ export default class HelpDateController {
       const helpDate = await helpDateService.create(data);
       return response.json(helpDate);
     } catch (e) {
-      console.log('Erro no cadastro do helpDate, ', e);
+      console.log('Erro no create helpDate, ', e);
       return response.status(400).send('Erro no cadastro.');
     }
   }

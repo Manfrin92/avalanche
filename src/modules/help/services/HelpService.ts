@@ -50,6 +50,7 @@ class HelpService {
 
     if (!help) {
       console.log('Help ID does not exist');
+      throw new Error('Help ID does not exist');
     }
 
     await helpRepository.delete({ id });

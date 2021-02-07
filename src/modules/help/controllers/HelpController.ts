@@ -12,7 +12,6 @@ export default class HelpController {
       const data = request.body;
 
       if (!data.title || !data.description) {
-        console.log(data);
         return response
           .status(400)
           .send('Faltam dados para o cadastro da ajuda.')
