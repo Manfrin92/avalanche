@@ -13,6 +13,7 @@ import User from '@modules/user/infra/typeorm/entities/User';
 import Needy from '@modules/needy/infra/typeorm/entities/Needy';
 import Address from '@modules/address/infra/typeorm/entities/Address';
 import HelpDate from '@modules/helpDate/infra/typeorm/entities/HelpDate';
+import Type from '@modules/type/infra/typeorm/entities/Type';
 
 @Entity('help')
 class Help {
@@ -48,6 +49,13 @@ class Help {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @Column({ nullable: true, name: 'image_name' })
+  imageName: string;
+
+  @ManyToOne(() => Type, { nullable: true })
+  @JoinColumn({ name: 'type_status_id' })
+  typeStatusId: Type;
 }
 
 export default Help;

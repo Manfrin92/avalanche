@@ -1,9 +1,12 @@
+import Address from '@modules/address/infra/typeorm/entities/Address';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
 @Entity('user')
@@ -32,8 +35,9 @@ class User {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @Column({ name: 'address_id', nullable: true })
-  address: string;
+  @ManyToOne(() => Address)
+  @JoinColumn({ name: 'address_id' })
+  address: Address;
 }
 
 export default User;
