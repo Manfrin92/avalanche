@@ -23,7 +23,7 @@ class HelpDate {
 
   @OneToOne(() => Help)
   @JoinColumn({ name: 'help_id' })
-  help: Help;
+  help: string;
 
   @OneToOne(() => User, { nullable: true })
   @JoinColumn({ name: 'user_volunteer_id' })

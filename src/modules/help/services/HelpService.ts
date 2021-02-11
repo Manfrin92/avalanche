@@ -2,6 +2,9 @@
 import { getRepository, Repository } from 'typeorm';
 import ICreateHelpDTO from '@modules/help/dtos/ICreateHelpDTO';
 
+import Address from '@modules/address/infra/typeorm/entities/Address';
+import HelpDate from '@modules/helpDate/infra/typeorm/entities/HelpDate';
+import Needy from '@modules/needy/infra/typeorm/entities/Needy';
 import Help from '../infra/typeorm/entities/Help';
 
 class HelpService {
@@ -12,10 +15,34 @@ class HelpService {
   }
 
   public async create(helpData: ICreateHelpDTO): Promise<Help | undefined> {
-    const help = this.ormRepository.create(helpData);
-    await this.ormRepository.save(help);
-    // eslint-disable-next-line consistent-return
-    return help;
+    const addressRepository = getRepository(Address);
+    const needyRepository = getRepository(Needy);
+    const HelpDateRepository = getRepository(HelpDate);
+
+    try {
+      const address = await addressRepository.create(helpData);
+      await addressRepository.save(address);
+      const needy = await needyRepository.create(helpData);
+      await needyRepository.save(needy);
+      const help = this.ormRepository.create({
+        ...helpData,
+        address: address.id,
+        needy: needy.id,
+      });
+
+      await this.ormRepository.save(help);
+
+      const helpDate = await HelpDateRepository.create({
+        date: helpData.helpDate,
+        help: help.id,
+      });
+
+      await HelpDateRepository.save(helpDate);
+
+      return help;
+    } catch (e) {
+      throw new Error(`Erro ao criar ajuda: ${e}`);
+    }
   }
 
   public async save(help: Help): Promise<Help> {

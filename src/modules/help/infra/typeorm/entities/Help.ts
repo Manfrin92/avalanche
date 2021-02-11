@@ -38,11 +38,11 @@ class Help {
 
   @ManyToOne(() => Needy)
   @JoinColumn({ name: 'needy_id' })
-  needy: Needy;
+  needy: string;
 
   @ManyToOne(() => Address)
   @JoinColumn({ name: 'address_id' })
-  address: Address;
+  address: string;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
@@ -55,7 +55,7 @@ class Help {
 
   @ManyToOne(() => Type, { nullable: true })
   @JoinColumn({ name: 'type_status_id' })
-  typeStatusId: Type;
+  typeStatusId: string;
 }
 
 export default Help;

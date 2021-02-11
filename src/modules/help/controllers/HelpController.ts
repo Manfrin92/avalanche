@@ -11,18 +11,10 @@ export default class HelpController {
       const helpService = new HelpService();
       const data = request.body;
 
-      if (!data.title || !data.description) {
-        return response
-          .status(400)
-          .send('Faltam dados para o cadastro da ajuda.')
-          .json(false);
-      }
-
       const help = await helpService.create(data);
       return response.json(help?.id);
     } catch (e) {
-      console.log('Erro no cadastro da ajuda, ', e);
-      return response.status(400).send('Erro no cadastro da ajuda.');
+      throw new Error(`Erro no cadastro da ajuda: ${e}`);
     }
   }
 
