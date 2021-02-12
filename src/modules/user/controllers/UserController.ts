@@ -16,19 +16,6 @@ export default class UserController {
       const userService = new UserService();
       const data = request.body;
 
-      if (
-        !data.email ||
-        !data.cpf ||
-        !data.name ||
-        !data.password ||
-        !data.phoneNumber ||
-        !data.address
-      ) {
-        return response
-          .status(400)
-          .send('Faltam dados para o cadastro do usuário');
-      }
-
       const foundEmailCpf = await userService.getByEmailCpf(
         data.email,
         data.cpf,
@@ -39,11 +26,9 @@ export default class UserController {
       }
 
       const user = await userService.create(data);
-      delete user?.password;
       return response.json(user);
     } catch (e) {
-      console.log('Erro no cadastro, ', e);
-      return response.status(400).send('Erro no cadastro.');
+      throw new Error(`Erro ao criar usuário ${e}`);
     }
   }
 
@@ -54,15 +39,12 @@ export default class UserController {
     try {
       const userService = new UserService();
       const data = request.body;
-      if (!data.id) {
-        return response.status(400).json({ message: 'Digite o ID do usuário' });
-      }
+
       const user = await userService.update(data);
       return response.json(user);
     } catch (e) {
-      console.log(e);
+      throw new Error(`Erro ao atualizar usuário ${e}`);
     }
-    return null;
   }
 
   public async checkCpfEmail(
@@ -70,10 +52,6 @@ export default class UserController {
     response: Response,
   ): Promise<Response> {
     try {
-      if (!request.body.email || !request.body.cpf) {
-        return response.status(400).send('É necessário informar CPF e Email');
-      }
-
       const userService = new UserService();
 
       const alreadyCreatedUser = await userService.getByEmailCpf(
@@ -82,14 +60,12 @@ export default class UserController {
       );
 
       if (alreadyCreatedUser) {
-        console.log('Email ou Cpf em uso.');
         return response.json(true);
       }
 
       return response.json(false);
     } catch (e) {
-      console.log(e);
-      throw new Error(e);
+      throw new Error(`Erro ao checar email cpf ${e}`);
     }
   }
 
@@ -128,12 +104,12 @@ export default class UserController {
         expiresIn,
       });
 
-      delete user.password;
+      const modifiedUser: any = user;
+      delete modifiedUser.password;
 
-      return response.json({ user, token });
+      return response.json({ user: modifiedUser, token });
     } catch (e) {
-      console.log(e);
-      throw new Error(e);
+      throw new Error(`Erro ao logar ${e}`);
     }
   }
 }

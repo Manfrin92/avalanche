@@ -25,16 +25,11 @@ export default class HelpController {
     try {
       const helpService = new HelpService();
       const { userManagerId } = request.body;
-      if (!userManagerId) {
-        response
-          .status(400)
-          .json({ message: 'Digite o id do usuário gerente' });
-      }
+
       const help = await helpService.findAllByUserManagerId(userManagerId);
       return response.json(help);
     } catch (e) {
-      console.log('err', e);
-      return response.send('Nenhuma ajuda encontrada');
+      throw new Error(`Erro ao buscar ajuda: ${e}`);
     }
   }
 
@@ -45,17 +40,12 @@ export default class HelpController {
     try {
       const helpService = new HelpService();
       const { id } = request.body;
-      if (!id) {
-        response.status(400).json({ message: 'Digite o id da ajuda' });
-      }
+
       const help = await helpService.findAllById(id);
-      if (help && help.length < 1) {
-        response.status(200).json({ message: 'Ajuda não encontrada' });
-      }
+
       return response.json(help);
     } catch (e) {
-      console.log('err', e);
-      return response.send('Nenhuma ajuda encontrada');
+      throw new Error(`Erro ao buscar ajuda: ${e}`);
     }
   }
 
@@ -67,7 +57,7 @@ export default class HelpController {
       await helpService.delete(id);
       return response.status(204).send();
     } catch (e) {
-      console.log(e);
+      throw new Error(`Erro ao deletar ajuda: ${e}`);
     }
   }
 
@@ -78,7 +68,7 @@ export default class HelpController {
       const help = await helpService.update(data);
       return response.json(help);
     } catch (e) {
-      console.log(e);
+      throw new Error(`Erro ao deletar ajuda: ${e}`);
     }
   }
 }

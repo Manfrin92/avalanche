@@ -35,7 +35,7 @@ class UserService {
     return user;
   }
 
-  public async update(userData: any): Promise<User | undefined> {
+  public async update(userData: User): Promise<User | undefined> {
     const userRepository = getRepository(User);
     const user = await userRepository.findOne({
       where: {
@@ -44,11 +44,13 @@ class UserService {
     });
 
     if (!user) {
-      return console.log('User not found.');
+      throw new Error('User not found');
     }
 
     await userRepository.save(userData);
-    return user;
+    const modifiedUser: any = user;
+    delete modifiedUser.password;
+    return modifiedUser;
   }
 
   public async save(user: User): Promise<User> {

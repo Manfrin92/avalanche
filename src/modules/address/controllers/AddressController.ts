@@ -10,25 +10,11 @@ export default class AddressController {
     try {
       const data = request.body;
 
-      if (
-        !data.addressZipCode ||
-        !data.addressStreet ||
-        !data.addressArea ||
-        !data.addressCity ||
-        !data.addressState
-      ) {
-        return response
-          .status(400)
-          .send('Faltam dados para o cadastro de endereço.')
-          .json(false);
-      }
-
       const addressService = new AddressService();
       const address = await addressService.create(data);
       return response.json(address?.id);
     } catch (e) {
-      console.log('Erro no cadastro, ', e);
-      return response.status(400).send('Erro no cadastro de endereço.');
+      throw new Error('Erro no cadastro de endereço');
     }
   }
 
@@ -39,19 +25,11 @@ export default class AddressController {
     try {
       const data = request.body;
 
-      if (!data.id) {
-        return response
-          .status(400)
-          .send('Faltam dados para buscar o endereço.')
-          .json(false);
-      }
-
       const addressService = new AddressService();
       const address = await addressService.getAddressById(data.id);
       return response.json(address);
     } catch (e) {
-      console.log('Erro no cadastro, ', e);
-      return response.status(400).send('Erro no cadastro de endereço.');
+      throw new Error('Erro ao buscar endereço');
     }
   }
 
@@ -62,21 +40,11 @@ export default class AddressController {
     try {
       const data = request.body;
 
-      console.log('dados chegando: ', data);
-
-      if (!data.id) {
-        return response
-          .status(400)
-          .send('Faltam dados para buscar o endereço.')
-          .json(false);
-      }
-
       const addressService = new AddressService();
       const address = await addressService.deleteById(data.id);
       return response.json(address);
     } catch (e) {
-      console.log('Erro no cadastro, ', e);
-      return response.status(400).send('Erro no cadastro de endereço.');
+      throw new Error('Erro ao deletar endereço');
     }
   }
 }
