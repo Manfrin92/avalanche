@@ -71,4 +71,19 @@ export default class HelpController {
       throw new Error(`Erro ao deletar ajuda: ${e}`);
     }
   }
+
+  public async getHelpRelatedInfo(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    try {
+      const helpService = new HelpService();
+      const { helpId } = request.params;
+
+      const help = await helpService.getHelpRelatedInfo(helpId);
+      return response.json(help);
+    } catch (e) {
+      throw new Error(`Erro ao buscar ajuda: ${e}`);
+    }
+  }
 }

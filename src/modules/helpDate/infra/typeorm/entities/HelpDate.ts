@@ -29,14 +29,14 @@ class HelpDate {
   @JoinColumn({ name: 'user_volunteer_id' })
   userVolunteer: User;
 
-  @ManyToOne(() => Type)
+  @ManyToOne(() => Type, { eager: true })
   @JoinColumn({ name: 'type_id' })
   type: Type;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: 'created_at', select: false })
   createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn({ name: 'updated_at', select: false })
   updatedAt: Date;
 }
 

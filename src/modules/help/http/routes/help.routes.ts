@@ -14,5 +14,10 @@ helpRouter.post(
   helpController.findAllByUserManagerId,
 );
 helpRouter.post('/findHelp', ensureAuthenticated, helpController.findAllById);
+helpRouter.get(
+  '/getHelpRelatedInfo/:helpId',
+  ensureAuthenticated,
+  helpController.getHelpRelatedInfo,
+);
 
 export default helpRouter;

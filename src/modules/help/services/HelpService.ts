@@ -76,14 +76,13 @@ class HelpService {
     });
 
     if (!help) {
-      console.log('Help ID does not exist');
       throw new Error('Help ID does not exist');
     }
 
     await helpRepository.delete({ id });
   }
 
-  public async update(helpData: any): Promise<Help> {
+  public async update(helpData: any): Promise<Help | undefined> {
     const helpRepository = getRepository(Help);
     const help = await helpRepository.findOne({
       where: {
@@ -91,11 +90,45 @@ class HelpService {
       },
     });
 
-    if (!help) {
-      console.log('helpDate not found.');
-    }
-
     await helpRepository.save(helpData);
+    return help;
+  }
+
+  public async getHelpRelatedInfo(helpId: string): Promise<any> {
+    const helpRepository = getRepository(Help);
+    const addressRepository = getRepository(Address);
+    const helpDateRepository = getRepository(HelpDate);
+    const needyRepository = getRepository(Needy);
+
+    const help = await helpRepository.findOne({
+      where: { id: helpId },
+    });
+
+    // const address = await addressRepository.findOne({
+    //   where: { id: help?.address },
+    // });
+
+    const helpDate = await helpDateRepository.findOne({
+      where: {
+        help: helpId,
+      },
+    });
+
+    // const needy = await needyRepository.findOne({
+    //   where: {
+    //     id: help?.needy,
+    //   },
+    // });
+
+    console.log(help);
+    console.log('========');
+    // console.log(address);
+    console.log('========');
+    console.log(helpDate);
+    console.log('========');
+    // console.log(needy);
+    console.log('========');
+
     return help;
   }
 }

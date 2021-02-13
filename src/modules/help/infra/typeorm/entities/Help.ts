@@ -36,18 +36,18 @@ class Help {
   @OneToMany(() => HelpDate, helpDates => helpDates.help)
   helpDates: HelpDate[];
 
-  @ManyToOne(() => Needy)
+  @ManyToOne(() => Needy, { eager: true })
   @JoinColumn({ name: 'needy_id' })
   needy: string;
 
-  @ManyToOne(() => Address)
+  @ManyToOne(() => Address, { eager: true })
   @JoinColumn({ name: 'address_id' })
   address: string;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: 'created_at', select: false })
   createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn({ name: 'updated_at', select: false })
   updatedAt: Date;
 
   @Column({ nullable: true, name: 'image_name' })
