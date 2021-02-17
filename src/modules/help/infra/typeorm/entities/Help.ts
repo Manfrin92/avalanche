@@ -38,11 +38,11 @@ class Help {
 
   @ManyToOne(() => Needy, { eager: true })
   @JoinColumn({ name: 'needy_id' })
-  needy: string;
+  needy: Needy;
 
   @ManyToOne(() => Address, { eager: true })
   @JoinColumn({ name: 'address_id' })
-  address: string;
+  address: Address;
 
   @CreateDateColumn({ name: 'created_at', select: false })
   createdAt: Date;
