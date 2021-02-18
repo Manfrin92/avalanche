@@ -6,7 +6,7 @@ export default interface ICreateHelpDTO {
   observation: string;
   addressZipCode: string;
   addressStreet: string;
-  addressNumber: number;
+  addressNumber: string;
   addressCity: string;
   addressState: string;
   addressComplement: string;
@@ -16,4 +16,5 @@ export default interface ICreateHelpDTO {
   typeId: string;
   userManagerId: string;
   typeStatusId: string;
+  helpedDateType: string;
 }

@@ -21,8 +21,13 @@ class Address {
   @Column({ type: 'varchar', length: 70, name: 'address_street' })
   addressStreet: string;
 
-  @Column({ type: 'int4', name: 'address_number', nullable: true })
-  addressNumber: number;
+  @Column({
+    type: 'varchar',
+    name: 'address_number',
+    nullable: true,
+    length: 6,
+  })
+  addressNumber: string;
 
   @Column({
     type: 'varchar',

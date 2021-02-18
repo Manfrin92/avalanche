@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable no-param-reassign */
 import { getRepository, Repository } from 'typeorm';
 import ICreateHelpDTO from '@modules/help/dtos/ICreateHelpDTO';
@@ -7,6 +8,33 @@ import Address from '@modules/address/infra/typeorm/entities/Address';
 import HelpDate from '@modules/helpDate/infra/typeorm/entities/HelpDate';
 import Needy from '@modules/needy/infra/typeorm/entities/Needy';
 import Help from '../infra/typeorm/entities/Help';
+
+interface UpdateHelpData {
+  addressArea: string;
+  addressCity: string;
+  addressComplement?: string;
+  addressCountry: string;
+  addressId: string;
+  addressNumber: string;
+  addressState: string;
+  addressStreet: string;
+  addressZipCode: number;
+  dateHour: string;
+  dddPhoneNumber: string;
+  description: string;
+  email: string;
+  helpDate: string;
+  helpDateId: string;
+  helpId: string;
+  name: string;
+  needyId: string;
+  observation: string;
+  phoneNumber: string;
+  title: string;
+  userManager: string;
+  showContact: boolean;
+  helpedDateType: string;
+}
 
 class HelpService {
   private ormRepository: Repository<Help>;
@@ -21,24 +49,27 @@ class HelpService {
     const HelpDateRepository = getRepository(HelpDate);
 
     try {
-      const address = await addressRepository.create(helpData);
-      await addressRepository.save(address);
-      const needy = await needyRepository.create(helpData);
-      await needyRepository.save(needy);
-      const help = this.ormRepository.create({
+      const address = await addressRepository.save({
+        addressArea: helpData.addressArea,
+        addressCity: helpData.addressCity,
+        addressComplement: helpData.addressComplement,
+        addressNumber: helpData.addressNumber,
+        addressState: helpData.addressState,
+        addressStreet: helpData.addressStreet,
+        addressZipCode: helpData.addressZipCode,
+      });
+      const needy = await needyRepository.save(helpData);
+      const help = await this.ormRepository.save({
         ...helpData,
         address: address.id,
         needy: needy.id,
       });
 
-      await this.ormRepository.save(help);
-
-      const helpDate = await HelpDateRepository.create({
-        date: helpData.helpDate,
+      await HelpDateRepository.save({
         help: help.id,
+        date: helpData.helpDate,
+        type: helpData.helpedDateType,
       });
-
-      await HelpDateRepository.save(helpDate);
 
       return help;
     } catch (e) {
@@ -83,15 +114,59 @@ class HelpService {
     await helpRepository.delete({ id });
   }
 
-  public async update(helpData: any): Promise<Help | undefined> {
-    const helpRepository = getRepository(Help);
-    const help = await helpRepository.findOne({
-      where: {
-        id: helpData.id,
-      },
-    });
+  public async update(helpData: UpdateHelpData): Promise<Help | undefined> {
+    const addressRepository = getRepository(Address);
+    const needyRepository = getRepository(Needy);
+    const HelpDateRepository = getRepository(HelpDate);
 
-    await helpRepository.save(helpData);
+    const address = await addressRepository.findOne(helpData.addressId);
+
+    if (address) {
+      await addressRepository.save({
+        id: helpData.addressId,
+        addressZipCode: String(helpData.addressZipCode),
+        addressArea: helpData.addressArea,
+        addressCity: helpData.addressCity,
+        addressComplement: helpData.addressComplement,
+        addressState: helpData.addressState,
+        addressNumber: helpData.addressNumber,
+        addressStreet: helpData.addressStreet,
+      });
+    }
+
+    const needy = await needyRepository.findOne(helpData.needyId);
+
+    if (needy) {
+      await needyRepository.save({
+        id: helpData.needyId,
+        email: helpData.email,
+        name: helpData.name,
+        phoneNumber: helpData.phoneNumber,
+        showContact: helpData.showContact,
+      });
+    }
+
+    const help = await this.ormRepository.findOne(helpData.helpId);
+
+    if (help) {
+      await this.ormRepository.save({
+        id: helpData.helpId,
+        title: helpData.title,
+        description: helpData.description,
+        observation: helpData.observation,
+      });
+    }
+
+    const helpDate = await HelpDateRepository.findOne(helpData.helpDateId);
+
+    if (helpDate) {
+      await HelpDateRepository.save({
+        id: helpData.helpDateId,
+        date: helpData.helpDate,
+        type: helpData.helpedDateType,
+      });
+    }
+
     return help;
   }
 
@@ -133,6 +208,7 @@ class HelpService {
       helpId: help?.id,
       addressId: help?.address.id || null,
       needyId: help?.needy.id || null,
+      helpDateId: helpDate?.id || null,
       name: help?.needy.name || null,
       email: help?.needy.email || null,
       dddPhoneNumber: help?.needy.phoneNumber

@@ -68,7 +68,7 @@ export default class HelpController {
       const help = await helpService.update(data);
       return response.json(help);
     } catch (e) {
-      throw new Error(`Erro ao deletar ajuda: ${e}`);
+      throw new Error(`Erro ao fazer update da ajuda: ${e}`);
     }
   }
 
