@@ -5,15 +5,15 @@ import HelpController from '../../controllers/HelpController';
 const helpRouter = Router();
 const helpController = new HelpController();
 
-helpRouter.post('/add', ensureAuthenticated, helpController.create);
+helpRouter.post('/', ensureAuthenticated, helpController.create);
 helpRouter.put('/', ensureAuthenticated, helpController.update);
-helpRouter.delete('/', ensureAuthenticated, helpController.delete);
-helpRouter.post(
-  '/findHelps',
+helpRouter.delete('/:id', ensureAuthenticated, helpController.delete);
+helpRouter.get(
+  '/:userManagerId',
   ensureAuthenticated,
   helpController.findAllByUserManagerId,
 );
-helpRouter.post('/findHelp', ensureAuthenticated, helpController.findAllById);
+helpRouter.get('/:id', ensureAuthenticated, helpController.findAllById);
 helpRouter.get(
   '/getHelpRelatedInfo/:helpId',
   ensureAuthenticated,

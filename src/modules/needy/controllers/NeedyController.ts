@@ -1,6 +1,6 @@
+import AppError from '@shared/errors/AppError';
 import { Request, Response } from 'express';
 import NeedyService from '../services/NeedyService';
-// import AppError from '@shared/errors/AppError';
 
 export default class NeedyController {
   public async getNeedyById(
@@ -14,7 +14,7 @@ export default class NeedyController {
       const needy = await needyService.getNeedyById(needyId);
       return response.json(needy);
     } catch (e) {
-      throw new Error(`Erro ao buscar needy: ${e}`);
+      throw new AppError(`Erro ao buscar needy: ${e}`);
     }
   }
 
@@ -28,7 +28,7 @@ export default class NeedyController {
       const needies = await needyService.getAllNeedies();
       return response.json(needies);
     } catch (e) {
-      throw new Error(`Erro ao buscar needies: ${e}`);
+      throw new AppError(`Erro ao buscar needies: ${e}`);
     }
   }
 
@@ -43,7 +43,7 @@ export default class NeedyController {
       const needy = await needyService.getNeedyByEmail(needyEmail);
       return response.json(needy);
     } catch (e) {
-      throw new Error(`Erro ao buscar needy por email: ${e}`);
+      throw new AppError(`Erro ao buscar needy por email: ${e}`);
     }
   }
 
@@ -58,7 +58,32 @@ export default class NeedyController {
       const needy = await needyService.getNeedyByName(needyName);
       return response.json(needy);
     } catch (e) {
-      throw new Error(`Erro ao buscar needy por name: ${e}`);
+      throw new AppError(`Erro ao buscar needy por name: ${e}`);
+    }
+  }
+
+  public async getNeedyByEmailOrName(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    try {
+      const data = request.body;
+      const needyService = new NeedyService();
+      let needy;
+
+      if (data.needyName) {
+        needy = await needyService.getNeedyByName(data.needyName);
+      } else if (data.needyEmail) {
+        needy = await needyService.getNeedyByEmail(data.needyEmail);
+      }
+
+      if (!needy) {
+        return response.json('Necessitado não encontrado.');
+      }
+
+      return response.json(needy);
+    } catch (e) {
+      throw new AppError(`Erro ao buscar needy por name: ${e}`);
     }
   }
 }

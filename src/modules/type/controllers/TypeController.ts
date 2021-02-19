@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
+import AppError from '@shared/errors/AppError';
 import TypeService from '../services/TypeService';
-// import AppError from '@shared/errors/AppError';
 
 export default class TypeController {
   public async findAllByGroupName(
@@ -14,7 +14,7 @@ export default class TypeController {
       const types = await typeService.findAllByGroupName(groupName);
       return response.json(types);
     } catch (e) {
-      throw new Error(`Erro ao buscar tipo: ${e}`);
+      throw new AppError(`Erro ao buscar tipo: ${e}`);
     }
   }
 }

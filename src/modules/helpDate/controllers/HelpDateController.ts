@@ -1,3 +1,4 @@
+import AppError from '@shared/errors/AppError';
 import { Request, Response } from 'express';
 // import AppError from '@shared/errors/AppError';
 import HelpDateService from '../services/HelpDateService';
@@ -14,7 +15,7 @@ export default class HelpDateController {
       const helpDate = await helpDateService.create(data);
       return response.json(helpDate);
     } catch (e) {
-      throw new Error(`Erro ao criar dia da ajuda: ${e}`);
+      throw new AppError(`Erro ao criar dia da ajuda: ${e}`);
     }
   }
 
@@ -24,11 +25,11 @@ export default class HelpDateController {
   ): Promise<Response | undefined> {
     try {
       const helpDateService = new HelpDateService();
-      const { userVolunteer } = request.body;
+      const { userVolunteerId } = request.params;
 
       return response.status(400).send('Envie o id do usuário voluntário');
     } catch (e) {
-      throw new Error(`Erro ao buscar dia da ajuda: ${e}`);
+      throw new AppError(`Erro ao buscar dia da ajuda: ${e}`);
     }
   }
 
@@ -38,7 +39,7 @@ export default class HelpDateController {
   ): Promise<Response | undefined> {
     try {
       const helpDateService = new HelpDateService();
-      const { id } = request.body;
+      const { id } = request.params;
 
       const helpDates = await helpDateService.helpDatesById(id);
 
@@ -50,7 +51,7 @@ export default class HelpDateController {
 
       return response.json(helpDates);
     } catch (e) {
-      throw new Error(`Erro ao buscar dia da ajuda: ${e}`);
+      throw new AppError(`Erro ao buscar dia da ajuda: ${e}`);
     }
   }
 
@@ -60,7 +61,7 @@ export default class HelpDateController {
   ): Promise<Response | undefined> {
     try {
       const helpDateService = new HelpDateService();
-      const { helpId } = request.body;
+      const { helpId } = request.params;
 
       const helpDates = await helpDateService.helpDatesByHelpId(helpId);
 
@@ -72,7 +73,7 @@ export default class HelpDateController {
 
       return response.json(helpDates);
     } catch (e) {
-      throw new Error(`Erro ao buscar dia da ajuda: ${e}`);
+      throw new AppError(`Erro ao buscar dia da ajuda: ${e}`);
     }
   }
 
@@ -83,19 +84,19 @@ export default class HelpDateController {
       const helpDate = await helpDateService.update(data);
       return response.json(helpDate);
     } catch (e) {
-      throw new Error(`Erro ao atualizar dia da ajuda: ${e}`);
+      throw new AppError(`Erro ao atualizar dia da ajuda: ${e}`);
     }
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
     try {
       const helpDateService = new HelpDateService();
-      const { id } = request.body;
+      const { id } = request.params;
 
       await helpDateService.delete(id);
       return response.status(204).send();
     } catch (e) {
-      throw new Error(`Erro ao deletar dia da ajuda: ${e}`);
+      throw new AppError(`Erro ao deletar dia da ajuda: ${e}`);
     }
   }
 }

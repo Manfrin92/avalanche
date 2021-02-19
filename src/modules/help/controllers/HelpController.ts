@@ -1,3 +1,4 @@
+import AppError from '@shared/errors/AppError';
 import { Request, Response } from 'express';
 import HelpService from '../services/HelpService';
 // import AppError from '@shared/errors/AppError';
@@ -14,7 +15,7 @@ export default class HelpController {
       const help = await helpService.create(data);
       return response.json(help?.id);
     } catch (e) {
-      throw new Error(`Erro no cadastro da ajuda: ${e}`);
+      throw new AppError(`Erro no cadastro da ajuda: ${e}`);
     }
   }
 
@@ -24,12 +25,12 @@ export default class HelpController {
   ): Promise<Response> {
     try {
       const helpService = new HelpService();
-      const { userManagerId } = request.body;
+      const { userManagerId } = request.params;
 
       const help = await helpService.findAllByUserManagerId(userManagerId);
       return response.json(help);
     } catch (e) {
-      throw new Error(`Erro ao buscar ajuda: ${e}`);
+      throw new AppError(`Erro ao buscar ajuda: ${e}`);
     }
   }
 
@@ -41,23 +42,23 @@ export default class HelpController {
       const helpService = new HelpService();
       const { id } = request.body;
 
-      const help = await helpService.findAllById(id);
+      const helps = await helpService.findAllById(id);
 
-      return response.json(help);
+      return response.json(helps);
     } catch (e) {
-      throw new Error(`Erro ao buscar ajuda: ${e}`);
+      throw new AppError(`Erro ao buscar ajuda: ${e}`);
     }
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
     try {
       const helpService = new HelpService();
-      const { id } = request.body;
+      const { id } = request.params;
 
       await helpService.delete(id);
       return response.status(204).send();
     } catch (e) {
-      throw new Error(`Erro ao deletar ajuda: ${e}`);
+      throw new AppError(`Erro ao deletar ajuda: ${e}`);
     }
   }
 
@@ -68,7 +69,7 @@ export default class HelpController {
       const help = await helpService.update(data);
       return response.json(help);
     } catch (e) {
-      throw new Error(`Erro ao fazer update da ajuda: ${e}`);
+      throw new AppError(`Erro ao fazer update da ajuda: ${e}`);
     }
   }
 
@@ -83,7 +84,7 @@ export default class HelpController {
       const help = await helpService.getHelpRelatedInfo(helpId);
       return response.json(help);
     } catch (e) {
-      throw new Error(`Erro ao buscar ajuda: ${e}`);
+      throw new AppError(`Erro ao buscar ajuda: ${e}`);
     }
   }
 }

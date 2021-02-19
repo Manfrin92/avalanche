@@ -1,3 +1,4 @@
+import AppError from '@shared/errors/AppError';
 import { Request, Response } from 'express';
 import AddressService from '../services/AddressService';
 // import AppError from '@shared/errors/AppError';
@@ -14,7 +15,7 @@ export default class AddressController {
       const address = await addressService.create(data);
       return response.json(address?.id);
     } catch (e) {
-      throw new Error('Erro no cadastro de endereço');
+      throw new AppError('Erro no cadastro de endereço');
     }
   }
 
@@ -23,13 +24,13 @@ export default class AddressController {
     response: Response,
   ): Promise<Response | undefined> {
     try {
-      const data = request.body;
+      const { id } = request.params;
 
       const addressService = new AddressService();
-      const address = await addressService.getAddressById(data.id);
+      const address = await addressService.getAddressById(id);
       return response.json(address);
     } catch (e) {
-      throw new Error('Erro ao buscar endereço');
+      throw new AppError('Erro ao buscar endereço');
     }
   }
 
@@ -38,13 +39,13 @@ export default class AddressController {
     response: Response,
   ): Promise<Response | undefined> {
     try {
-      const data = request.body;
+      const { id } = request.params;
 
       const addressService = new AddressService();
-      const address = await addressService.deleteById(data.id);
+      const address = await addressService.deleteById(id);
       return response.json(address);
     } catch (e) {
-      throw new Error('Erro ao deletar endereço');
+      throw new AppError('Erro ao deletar endereço');
     }
   }
 }

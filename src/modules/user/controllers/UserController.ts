@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-// import AppError from '@shared/errors/AppError';
+import AppError from '@shared/errors/AppError';
 import { compare, hash } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { getCustomRepository, getRepository, Repository } from 'typeorm';
@@ -28,7 +28,7 @@ export default class UserController {
       const user = await userService.create(data);
       return response.json(user);
     } catch (e) {
-      throw new Error(`Erro ao criar usuário ${e}`);
+      throw new AppError(`Erro ao criar usuário ${e}`);
     }
   }
 
@@ -43,7 +43,7 @@ export default class UserController {
       const user = await userService.update(data);
       return response.json(user);
     } catch (e) {
-      throw new Error(`Erro ao atualizar usuário ${e}`);
+      throw new AppError(`Erro ao atualizar usuário ${e}`);
     }
   }
 
@@ -65,7 +65,7 @@ export default class UserController {
 
       return response.json(false);
     } catch (e) {
-      throw new Error(`Erro ao checar email cpf ${e}`);
+      throw new AppError(`Erro ao checar email cpf ${e}`);
     }
   }
 
@@ -109,7 +109,7 @@ export default class UserController {
 
       return response.json({ user: modifiedUser, token });
     } catch (e) {
-      throw new Error(`Erro ao logar ${e}`);
+      throw new AppError(`Erro ao logar ${e}`);
     }
   }
 }
