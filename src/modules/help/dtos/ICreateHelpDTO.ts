@@ -16,5 +16,5 @@ export default interface ICreateHelpDTO {
   typeId: string;
   userManagerId: string;
   typeStatusId: string;
-  helpedDateType: string;
+  helpedDateTypeId: string;
 }

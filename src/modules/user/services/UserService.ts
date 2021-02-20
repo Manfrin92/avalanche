@@ -1,10 +1,9 @@
 /* eslint-disable no-param-reassign */
-import { getCustomRepository, getRepository, Repository } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 import ICreateUserDTO from '@modules/user/dtos/ICreateUserDTO';
-import { compare, hash } from 'bcryptjs';
-import { sign } from 'jsonwebtoken';
-import { response } from 'express';
-import authConfig from '../../../config/auth';
+import { hash } from 'bcryptjs';
+import Address from '@modules/address/infra/typeorm/entities/Address';
+import AppError from '@shared/errors/AppError';
 
 import User from '../infra/typeorm/entities/User';
 
@@ -26,13 +25,33 @@ class UserService {
   }
 
   public async create(userData: ICreateUserDTO): Promise<User | undefined> {
+    const addressRepository = getRepository(Address);
     const hashedPassword = await hash(userData.password.toLowerCase(), 8);
     userData.password = hashedPassword;
 
-    const user = this.ormRepository.create(userData);
-    await this.ormRepository.save(user);
-    // eslint-disable-next-line consistent-return
-    return user;
+    try {
+      const address = addressRepository.create({
+        addressArea: userData.addressArea,
+        addressCity: userData.addressCity,
+        addressComplement: userData.addressComplement,
+        addressNumber: String(userData.addressNumber),
+        addressState: userData.addressState,
+        addressStreet: userData.addressStreet,
+        addressZipCode: userData.addressZipCode,
+      });
+
+      await addressRepository.save(address);
+
+      const user = this.ormRepository.create({
+        ...userData,
+        address,
+      });
+      await this.ormRepository.save(user);
+
+      return user;
+    } catch (e) {
+      throw new AppError('Erro ao criar user');
+    }
   }
 
   public async update(userData: User): Promise<User | undefined> {

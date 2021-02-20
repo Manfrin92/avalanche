@@ -68,7 +68,7 @@ class HelpService {
       await HelpDateRepository.save({
         help: help.id,
         date: helpData.helpDate,
-        type: helpData.helpedDateType,
+        type: helpData.helpedDateTypeId,
       });
 
       return help;
@@ -231,12 +231,8 @@ class HelpService {
       helpDateId: helpDate?.id || null,
       name: help?.needy.name || null,
       email: help?.needy.email || null,
-      dddPhoneNumber: help?.needy.phoneNumber
-        ? help?.needy.phoneNumber.substr(0, 2)
-        : null,
-      phoneNumber: help?.needy.phoneNumber
-        ? help?.needy.phoneNumber.substr(2)
-        : null,
+      ddd: help?.needy.ddd ? help?.needy.ddd : null,
+      phoneNumber: help?.needy.phoneNumber ? help?.needy.phoneNumber : null,
       showContact: help?.needy.showContact,
       title: help?.title,
       description: help?.description || null,
