@@ -7,6 +7,7 @@ import { getHours, getMinutes } from 'date-fns';
 import Address from '@modules/address/infra/typeorm/entities/Address';
 import HelpDate from '@modules/helpDate/infra/typeorm/entities/HelpDate';
 import Needy from '@modules/needy/infra/typeorm/entities/Needy';
+import AppError from '@shared/errors/AppError';
 import Help from '../infra/typeorm/entities/Help';
 
 interface UpdateHelpData {
@@ -58,7 +59,15 @@ class HelpService {
         addressStreet: helpData.addressStreet,
         addressZipCode: helpData.addressZipCode,
       });
-      const needy = await needyRepository.save(helpData);
+
+      const needy = await needyRepository.save({
+        ddd: helpData.ddd,
+        email: helpData.email,
+        name: helpData.name,
+        phoneNumber: helpData.phoneNumber,
+        showContact: helpData.showContact,
+        id: helpData.needyId,
+      });
       const help = await this.ormRepository.save({
         ...helpData,
         address: address.id,
@@ -108,7 +117,19 @@ class HelpService {
     });
 
     if (!help) {
-      throw new Error('Help ID does not exist');
+      throw new AppError('Help ID does not exist');
+    }
+
+    const helpDateRepository = getRepository(HelpDate);
+
+    const helpDate = await helpDateRepository.findOne({
+      where: {
+        help,
+      },
+    });
+
+    if (helpDate) {
+      await helpDateRepository.delete(helpDate);
     }
 
     await helpRepository.delete({ id });
@@ -120,17 +141,6 @@ class HelpService {
     const HelpDateRepository = getRepository(HelpDate);
 
     const address = await addressRepository.findOne(helpData.addressId);
-
-    console.log('dados que serão salvosno address: ', {
-      id: helpData.addressId,
-      addressZipCode: String(helpData.addressZipCode),
-      addressArea: helpData.addressArea,
-      addressCity: helpData.addressCity,
-      addressComplement: helpData.addressComplement,
-      addressState: helpData.addressState,
-      addressNumber: helpData.addressNumber,
-      addressStreet: helpData.addressStreet,
-    });
 
     if (address) {
       await addressRepository.save({

@@ -17,4 +17,8 @@ export default interface ICreateHelpDTO {
   userManagerId: string;
   typeStatusId: string;
   helpedDateTypeId: string;
+  needyId?: string;
+  ddd?: string;
+  phoneNumber?: string;
+  showContact?: boolean;
 }
