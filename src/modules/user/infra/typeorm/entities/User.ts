@@ -26,6 +26,9 @@ class User {
   @Column()
   password: string;
 
+  @Column()
+  ddd: string;
+
   @Column({ name: 'phone_number' })
   phoneNumber: string;
 

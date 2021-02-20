@@ -24,6 +24,9 @@ class Needy {
   @Column({ name: 'show_contact', default: true })
   showContact: boolean;
 
+  @Column({ nullable: true })
+  ddd: string;
+
   @Column({ name: 'phone_number', nullable: true })
   phoneNumber: string;
 
