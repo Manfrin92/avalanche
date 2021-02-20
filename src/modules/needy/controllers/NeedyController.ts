@@ -1,5 +1,7 @@
 import AppError from '@shared/errors/AppError';
 import { Request, Response } from 'express';
+import { getRepository } from 'typeorm';
+import Needy from '../infra/typeorm/entities/Needy';
 import NeedyService from '../services/NeedyService';
 
 export default class NeedyController {
@@ -68,13 +70,21 @@ export default class NeedyController {
   ): Promise<Response> {
     try {
       const data = request.body;
-      const needyService = new NeedyService();
+      const needyRepository = getRepository(Needy);
       let needy;
 
-      if (data.needyName) {
-        needy = await needyService.getNeedyByName(data.needyName);
-      } else if (data.needyEmail) {
-        needy = await needyService.getNeedyByEmail(data.needyEmail);
+      if (data.name) {
+        needy = await needyRepository.findOne({
+          where: {
+            name: data.name,
+          },
+        });
+      } else if (data.email) {
+        needy = await needyRepository.findOne({
+          where: {
+            email: data.email,
+          },
+        });
       }
 
       if (!needy) {

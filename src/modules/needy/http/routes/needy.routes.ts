@@ -6,11 +6,7 @@ const needyRouter = Router();
 const needyController = new NeedyController();
 
 needyRouter.get('/:needyId', ensureAuthenticated, needyController.getNeedyById);
-needyRouter.get(
-  '/getAllNeedies',
-  ensureAuthenticated,
-  needyController.getAllNeedies,
-);
+needyRouter.get('/', ensureAuthenticated, needyController.getAllNeedies);
 needyRouter.get(
   '/getNeedyByEmail/:needyEmail',
   ensureAuthenticated,

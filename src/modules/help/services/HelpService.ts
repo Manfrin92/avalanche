@@ -121,6 +121,17 @@ class HelpService {
 
     const address = await addressRepository.findOne(helpData.addressId);
 
+    console.log('dados que serão salvosno address: ', {
+      id: helpData.addressId,
+      addressZipCode: String(helpData.addressZipCode),
+      addressArea: helpData.addressArea,
+      addressCity: helpData.addressCity,
+      addressComplement: helpData.addressComplement,
+      addressState: helpData.addressState,
+      addressNumber: helpData.addressNumber,
+      addressStreet: helpData.addressStreet,
+    });
+
     if (address) {
       await addressRepository.save({
         id: helpData.addressId,
@@ -136,6 +147,14 @@ class HelpService {
 
     const needy = await needyRepository.findOne(helpData.needyId);
 
+    console.log('Dados que serão salvos no needy: ', {
+      id: helpData.needyId,
+      email: helpData.email,
+      name: helpData.name,
+      phoneNumber: helpData.phoneNumber,
+      showContact: helpData.showContact,
+    });
+
     if (needy) {
       await needyRepository.save({
         id: helpData.needyId,
@@ -150,6 +169,7 @@ class HelpService {
 
     if (help) {
       await this.ormRepository.save({
+        ...help,
         id: helpData.helpId,
         title: helpData.title,
         description: helpData.description,
