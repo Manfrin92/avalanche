@@ -29,7 +29,7 @@ class Help {
   @Column({ nullable: true })
   observation: string;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'user_manager_id' })
   userManager: User;
 

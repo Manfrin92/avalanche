@@ -18,6 +18,7 @@ class HelpDateRepository extends Repository<HelpDate> {
       where: {
         date: Between(filter.initialDate, filter.finalDate),
         type: filter.type,
+        userVolunteer: null,
       },
     });
 
