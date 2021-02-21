@@ -5,7 +5,7 @@ import ensureAuthenticated from '../../../../middlewares/ensureAuthenticated';
 const userRouter = Router();
 const userController = new UserController();
 
-userRouter.post('/', userController.create);
+userRouter.post('/', userController.createUser);
 userRouter.put('/', ensureAuthenticated, userController.update);
 userRouter.post('/checkCpfEmail', userController.checkCpfEmail);
 userRouter.post('/logIn', userController.logIn);

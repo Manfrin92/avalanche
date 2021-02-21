@@ -8,7 +8,7 @@ import authConfig from '../../../config/auth';
 import User from '../infra/typeorm/entities/User';
 
 export default class UserController {
-  public async create(
+  public async createUser(
     request: Request,
     response: Response,
   ): Promise<Response | undefined> {
@@ -25,7 +25,7 @@ export default class UserController {
         return response.status(400).send('CPF ou E-mail já utilizado.');
       }
 
-      const user = await userService.create(data);
+      const user = await userService.createUser(data);
       return response.json(user);
     } catch (e) {
       throw new AppError(`Erro ao criar usuário ${e}`);

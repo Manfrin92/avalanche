@@ -4,8 +4,8 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToOne,
   JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 import User from '@modules/user/infra/typeorm/entities/User';
 import Type from '@modules/type/infra/typeorm/entities/Type';
@@ -15,11 +15,11 @@ class UserSkills {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToOne(() => User)
+  @ManyToOne(() => User, { nullable: false })
   @JoinColumn({ name: 'user_id' })
   user: string;
 
-  @OneToOne(() => Type)
+  @ManyToOne(() => Type, { nullable: false })
   @JoinColumn({ name: 'type_skill_id' })
   typeSkill: string;
 

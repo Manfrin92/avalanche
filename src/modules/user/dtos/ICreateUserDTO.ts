@@ -12,4 +12,5 @@ export default interface ICreateUserDTO {
   addressCity: string;
   addressState: string;
   addressCountry: string;
+  skills?: Array<string>;
 }

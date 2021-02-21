@@ -5,6 +5,7 @@ import { hash } from 'bcryptjs';
 import Address from '@modules/address/infra/typeorm/entities/Address';
 import AppError from '@shared/errors/AppError';
 
+import UserSkills from '@modules/userSkills/infra/typeorm/entities/UserSkills';
 import User from '../infra/typeorm/entities/User';
 
 interface IRequest {
@@ -24,8 +25,9 @@ class UserService {
     this.ormRepository = getRepository(User);
   }
 
-  public async create(userData: ICreateUserDTO): Promise<User | undefined> {
+  public async createUser(userData: ICreateUserDTO): Promise<User | undefined> {
     const addressRepository = getRepository(Address);
+    const userSkillsRepository = getRepository(UserSkills);
     const hashedPassword = await hash(userData.password.toLowerCase(), 8);
     userData.password = hashedPassword;
 
@@ -47,6 +49,15 @@ class UserService {
         address,
       });
       await this.ormRepository.save(user);
+
+      if (userData && userData.skills && userData.skills.length > 0) {
+        userData.skills.forEach(async skillId => {
+          await userSkillsRepository.save({
+            typeSkill: skillId,
+            user: user.id,
+          });
+        });
+      }
 
       return user;
     } catch (e) {
