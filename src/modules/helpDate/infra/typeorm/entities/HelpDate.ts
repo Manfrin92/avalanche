@@ -21,7 +21,7 @@ class HelpDate {
   @Column()
   date: Date;
 
-  @OneToOne(() => Help)
+  @OneToOne(() => Help, { eager: true })
   @JoinColumn({ name: 'help_id' })
   help: Help;
 

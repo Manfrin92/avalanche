@@ -268,7 +268,7 @@ class HelpService {
       type: helpDateType,
     });
 
-    return 'helps';
+    return helpDates;
   }
 }
 
