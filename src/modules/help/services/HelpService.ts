@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable no-param-reassign */
-import { getRepository, Repository } from 'typeorm';
+import { getCustomRepository, getRepository, Repository } from 'typeorm';
 import ICreateHelpDTO from '@modules/help/dtos/ICreateHelpDTO';
 import { getHours, getMinutes } from 'date-fns';
 
@@ -8,7 +8,9 @@ import Address from '@modules/address/infra/typeorm/entities/Address';
 import HelpDate from '@modules/helpDate/infra/typeorm/entities/HelpDate';
 import Needy from '@modules/needy/infra/typeorm/entities/Needy';
 import AppError from '@shared/errors/AppError';
+import Type from '@modules/type/infra/typeorm/entities/Type';
 import Help from '../infra/typeorm/entities/Help';
+import HelpDateRepository from '../../helpDate/repository/HelpDateRepository';
 
 interface UpdateHelpData {
   addressArea: string;
@@ -157,14 +159,6 @@ class HelpService {
 
     const needy = await needyRepository.findOne(helpData.needyId);
 
-    console.log('Dados que serão salvos no needy: ', {
-      id: helpData.needyId,
-      email: helpData.email,
-      name: helpData.name,
-      phoneNumber: helpData.phoneNumber,
-      showContact: helpData.showContact,
-    });
-
     if (needy) {
       await needyRepository.save({
         id: helpData.needyId,
@@ -258,6 +252,23 @@ class HelpService {
       addressCity: help?.address.addressCity || null,
       addressState: help?.address.addressState || null,
     };
+  }
+
+  public async filterHelp(
+    initialDate: Date,
+    finalDate: Date,
+    helpDateType: Type,
+  ): Promise<Help[] | undefined | any> {
+    const helpRepository = getRepository(Help);
+    const helpDateRepository = getCustomRepository(HelpDateRepository);
+
+    const helpDates = await helpDateRepository.filterByDateAndType({
+      initialDate,
+      finalDate,
+      type: helpDateType,
+    });
+
+    return 'helps';
   }
 }
 

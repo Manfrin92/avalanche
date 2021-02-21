@@ -1,8 +1,0 @@
-error: [2021-02-20 10:10:48]  Erro ao buscar endereço
-error: [2021-02-20 11:49:16]  Erro ao buscar needy: QueryFailedError: invalid input syntax for type uuid: "getAllNeedies"
-error: [2021-02-20 11:49:24]  Erro ao buscar needy: QueryFailedError: invalid input syntax for type uuid: "getAllNeedies"
-error: [2021-02-20 11:50:37]  Erro ao buscar needy: QueryFailedError: invalid input syntax for type uuid: "getAllNeedies"
-error: [2021-02-20 11:51:31]  Erro ao buscar needy: QueryFailedError: invalid input syntax for type uuid: "getAllNeedies"
-error: [2021-02-20 11:51:52]  Erro ao buscar needy: QueryFailedError: invalid input syntax for type uuid: "getAllNeedies"
-error: [2021-02-20 11:52:09]  Erro ao buscar needy: QueryFailedError: invalid input syntax for type uuid: "getAllNeedies"
-error: [2021-02-20 15:59:41]  Erro ao deletar ajuda: QueryFailedError: update or delete on table "help" violates foreign key constraint "FK_7967de569045fc9b97f23090d22" on table "help_date"

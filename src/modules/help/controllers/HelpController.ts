@@ -87,4 +87,24 @@ export default class HelpController {
       throw new AppError(`Erro ao buscar ajuda: ${e}`);
     }
   }
+
+  public async filterHelp(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    try {
+      const helpService = new HelpService();
+      const { initialDate, finalDate, helpDateType } = request.body;
+
+      const helps = await helpService.filterHelp(
+        initialDate,
+        finalDate,
+        helpDateType,
+      );
+
+      return response.json(helps);
+    } catch (e) {
+      throw new AppError(`Erro ao buscar ajuda: ${e}`);
+    }
+  }
 }

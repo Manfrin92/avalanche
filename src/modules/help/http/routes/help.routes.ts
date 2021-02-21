@@ -19,5 +19,6 @@ helpRouter.get(
   ensureAuthenticated,
   helpController.getHelpRelatedInfo,
 );
+helpRouter.post('/filterHelp', ensureAuthenticated, helpController.filterHelp);
 
 export default helpRouter;

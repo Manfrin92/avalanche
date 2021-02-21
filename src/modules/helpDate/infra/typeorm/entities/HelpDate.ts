@@ -23,7 +23,7 @@ class HelpDate {
 
   @OneToOne(() => Help)
   @JoinColumn({ name: 'help_id' })
-  help: string;
+  help: Help;
 
   @OneToOne(() => User, { nullable: true })
   @JoinColumn({ name: 'user_volunteer_id' })
@@ -31,7 +31,7 @@ class HelpDate {
 
   @ManyToOne(() => Type, { eager: true })
   @JoinColumn({ name: 'type_id' })
-  type: string;
+  type: Type;
 
   @CreateDateColumn({ name: 'created_at', select: false })
   createdAt: Date;
