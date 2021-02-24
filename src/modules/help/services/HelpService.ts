@@ -49,7 +49,7 @@ class HelpService {
   public async create(helpData: ICreateHelpDTO): Promise<Help | undefined> {
     const addressRepository = getRepository(Address);
     const needyRepository = getRepository(Needy);
-    const HelpDateRepository = getRepository(HelpDate);
+    const helpDateRepository = getRepository(HelpDate);
 
     try {
       const address = await addressRepository.save({
@@ -76,7 +76,7 @@ class HelpService {
         needy: needy.id,
       });
 
-      await HelpDateRepository.save({
+      await helpDateRepository.save({
         help: help.id,
         date: helpData.helpDate,
         type: helpData.helpedDateTypeId,
@@ -92,14 +92,32 @@ class HelpService {
     return this.ormRepository.save(help);
   }
 
-  public async findAllByUserManagerId(
-    userManagerId: string,
-  ): Promise<Help[] | undefined> {
+  // ESSE MÉTODO PODE FICAR MELHOR ESTRUTURADO COM SQL OU REFATORANDO AS ENTIDADES
+  public async findAllByUserManagerId(userManagerId: string): Promise<any> {
     const helpRepository = getRepository(Help);
-    const help = await helpRepository.find({
+    const helpDateRepository = getRepository(HelpDate);
+
+    const helps = await helpRepository.find({
       where: { userManager: userManagerId },
     });
-    return help;
+
+    const helpDatesRelated: HelpDate[] = [];
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const help of helps) {
+      // eslint-disable-next-line no-await-in-loop
+      const relatedHelpDate = await helpDateRepository.findOne({
+        where: {
+          help,
+        },
+      });
+
+      if (relatedHelpDate) {
+        helpDatesRelated.push(relatedHelpDate);
+      }
+    }
+
+    return helpDatesRelated;
   }
 
   public async findAllById(id: string): Promise<Help[] | undefined> {
