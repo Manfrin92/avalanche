@@ -70,28 +70,13 @@ export default class NeedyController {
   ): Promise<Response> {
     try {
       const data = request.body;
-      const needyRepository = getRepository(Needy);
-      let needy;
+      const needyService = new NeedyService();
 
-      if (data.name) {
-        needy = await needyRepository.findOne({
-          where: {
-            name: data.name,
-          },
-        });
-      } else if (data.email) {
-        needy = await needyRepository.findOne({
-          where: {
-            email: data.email,
-          },
-        });
-      }
+      const neediesReturned = await needyService.getNeedyByNameOrEmailIlike(
+        data.nameOrEmail,
+      );
 
-      if (!needy) {
-        return response.json('Necessitado não encontrado.');
-      }
-
-      return response.json(needy);
+      return response.json(neediesReturned);
     } catch (e) {
       throw new AppError(`Erro ao buscar needy por name: ${e}`);
     }

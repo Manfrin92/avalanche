@@ -37,6 +37,23 @@ class NeedyService {
 
     return needy;
   }
+
+  public async getNeedyByNameOrEmailIlike(
+    nameOrEmail: string,
+  ): Promise<Needy[] | undefined> {
+    const needies = await this.ormRepository
+      .createQueryBuilder('needy')
+      .select()
+      .where('needy.name ilike :searchText', {
+        searchText: `%${nameOrEmail}%`,
+      })
+      .orWhere('needy.email ilike :searchText', {
+        searchText: `%${nameOrEmail}%`,
+      })
+      .getMany();
+
+    return needies;
+  }
 }
 
 export default NeedyService;
