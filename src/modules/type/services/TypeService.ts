@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import { getRepository, Repository } from 'typeorm';
-
 import Type from '../infra/typeorm/entities/Type';
 
 class TypeService {
@@ -10,12 +9,15 @@ class TypeService {
     this.ormRepository = getRepository(Type);
   }
 
-  public async findAllByGroupName(
-    groupName: string,
-  ): Promise<Type[] | undefined> {
+  public async findAllByGroupName(groupName: string): Promise<Type[] | undefined> {
     const types = await this.ormRepository.find({
       where: { groupName },
     });
+    return types;
+  }
+
+  public async findAll(): Promise<Type[] | undefined> {
+    const types = await this.ormRepository.find();
     return types;
   }
 }
