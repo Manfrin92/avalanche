@@ -8,17 +8,9 @@ const helpController = new HelpController();
 helpRouter.post('/', ensureAuthenticated, helpController.create);
 helpRouter.put('/', ensureAuthenticated, helpController.update);
 helpRouter.delete('/:id', ensureAuthenticated, helpController.delete);
-helpRouter.get(
-  '/:userManagerId',
-  ensureAuthenticated,
-  helpController.findAllByUserManagerId,
-);
+helpRouter.get('/:userManagerId', ensureAuthenticated, helpController.findAllByUserManagerId);
 helpRouter.get('/:id', ensureAuthenticated, helpController.findAllById);
-helpRouter.get(
-  '/getHelpRelatedInfo/:helpId',
-  ensureAuthenticated,
-  helpController.getHelpRelatedInfo,
-);
+helpRouter.get('/getHelpRelatedInfo/:helpId', ensureAuthenticated, helpController.getHelpRelatedInfo);
 helpRouter.post('/filterHelp', ensureAuthenticated, helpController.filterHelp);
 
 export default helpRouter;
